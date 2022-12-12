@@ -324,4 +324,4 @@ def shopping_cart(user_cart):
     print(f"\n\t\t\t\tTotal Price:\t${total_price:.2f}\n")
 
 user_cart2 = {}
-print(shopping_cart(user_cart2))
+shopping_cart(user_cart2)
