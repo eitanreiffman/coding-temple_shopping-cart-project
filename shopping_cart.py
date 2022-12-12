@@ -307,3 +307,14 @@ while x != "yes":
                 "To explore other options, enter any other key: ").lower()
 
 print(f"\nThank you {username} for shopping with us!\n")
+print(f"\nHere is your receipt:\n")
+print("Food Item\t\t\tPrice\n")
+for item, price in user_cart.items():
+    if len(item) < 8:
+        print(f"{item.title()}\t\t\t\t${price:.2f}")
+    elif len(item) > 16:
+        print(f"{item.title()}\t\t${price:.2f}")
+    else:
+        print(f"{item.title()}\t\t\t${price:.2f}")
+
+print(f"\n\t\t\t\tTotal Price:\t${total_price:.2f}\n")
