@@ -14,33 +14,38 @@
 # So basically there should be 2 separate dictionaries.
 # One that shows the user's shopping cart, and another that shows the available items in the store
 
+# How can we set up a scenario in which the user is constantly going back to the cart?
+# Perhaps this can work by using a While Loop all the way at the top - as a 'base' of sorts
+# Whenever the user makes a purchase, or finishes searching for an item, they'll end up getting rerouted back to the cart at the top
+# This While loop will only end when the user dictates that they're done shopping - perhaps by typing in the word 'done' or 'checkout'
+
 # Available Store Items:
 available_items = {
     "Baked Goods" : {
             "Bread" : {
-            "White" : 2.50,
+            "White Bread" : 2.50,
             "Rye" : 2.75,
             "Sourdough" : 2.75,
-            "Whole Wheat" : 2.75
+            "Whole Wheat Bread" : 2.75
         },
         "Croissant" : {
-            "Butter" : 3.00,
-            "Chocolate" : 3.50 
+            "Butter Croissant" : 3.00,
+            "Chocolate Croissant" : 3.50 
         },
         "Danish" : {
-            "Cheese" : 3.50,
-            "Chocolate" : 3.50,
+            "Cheese Danish" : 3.50,
+            "Chocolate Danish" : 3.50,
         },
     },
     "Produce" : {
         "Apple" : {
-            "Granny Smith" : 1.00,
-            "Pink Lady" : 1.25,
-            "Gala" : 1.25 
+            "Granny Smith Apple" : 1.00,
+            "Pink Lady Apple" : 1.25,
+            "Gala Apple" : 1.25 
         },
         "Orange" : {
-            "Blood" : 1.25,
-            "Navel" : 1.25
+            "Blood Orange" : 1.25,
+            "Navel Orange" : 1.25
         },
         "Nectarine" : 1.35,
         "Peach" : 1.35,
@@ -50,22 +55,17 @@ available_items = {
         "Soda" : {
             "Coke" : 2.00,
             "Sprite" : 2.00,
-            "Root Beer" : {
-                "A&W" : 2.00,
-                "Barqs" : 1.75
-        }},
+            "Root Beer" : 2.00
+        },
         "Juice" : {
-            "Orange" : {
-                "Tropicana" : 3.50,
-                "Florida's Natural" : 3.00
-            },
-            "Apple" : 3.50,
-            "V8" : 4.50
+            "Orange Juice" : 3.00,
+            "Apple Juice" : 3.50,
+            "V8 Juice" : 4.50
         },
         "Milk" : {
-            "Non-Fat" : 1.50,
-            "Low-Fat" : 1.75,
-            "Whole" : 2.00 
+            "Non-Fat Milk" : 1.50,
+            "Low-Fat Milk" : 1.75,
+            "Whole Milk" : 2.00 
         },
         "Water" : {
             "Poland Spring" : 1.50,
@@ -75,17 +75,17 @@ available_items = {
     },
     "Meat Counter" : {
         "Steak" : {
-            "T-Bone" : 10.00,
-            "Rib-Eye" : 9.50,
-            "Skirt" : 9.00
+            "T-Bone Steak" : 10.00,
+            "Rib-Eye Steak" : 9.50,
+            "Skirt Steak" : 9.00
         },
         "Hamburger" : {
-            "Regular" : 6.00,
-            "Veggie" : 6.50,
-            "Turkey" : 6.25
+            "Regular Hamburger" : 6.00,
+            "Veggie Burger" : 6.50,
+            "Turkey Burger" : 6.25
         },
         "Sausage" : {
-            "Polish" : 6.00,
+            "Polish Sausage" : 6.00,
             "Bratwurst" : 6.50,
             "Knackwurst" : 6.50,
             "Chorizo" : 6.50
@@ -93,16 +93,16 @@ available_items = {
     },
     "Cheese Counter" : {
         "Mozzarella" : {
-            "Shredded" : 4.25,
-            "Block" : 4.00
+            "Shredded Mozzarella" : 4.25,
+            "Mozzarella Block" : 4.00
         },
         "Cheddar" : {
-            "Shredded" : 4.25,
-            "Block" : 4.00
+            "Shredded Cheddar" : 4.25,
+            "Cheddar Block" : 4.00
         },
         "Muenster" : {
-            "Sliced" : 4.50,
-            "Block" : 4.25
+            "Sliced Muenster" : 4.50,
+            "Muenster Block" : 4.25
         },
         "Gouda" : 4.50,
         "Brie" : 5.00,
@@ -123,10 +123,11 @@ user_cart = {}
 
 username = input("Please enter your name: ").title()
 
-print(f"\nHi {username}\n")
+print(f"\n\nHi {username}!")
 
 x = ""
-y = ""
+z = ""
+total_price = 0
 
 # Let's hash out what needs to be done
 # With this While loop, it will always start with a very basic question:
@@ -141,14 +142,14 @@ y = ""
 
 
 while x != "yes":
-    do_now = input("What would you like to do now?\n\n"
+
+    do_now = input("\nWhat would you like to do?\n\n"
             "Enter 'browse' to browse the store\n\n"
-            "Enter 'cart' to see your shopping cart\n\n"
             "Enter 'remove' to remove an item from your cart\n\n"
             "Enter 'clear' to clear all items from your cart\n\n"
             "Enter 'checkout' to check out: ")
     
-    while do_now.lower() != "browse" or "cart" or "remove" or "clear" or "checkout":
+    while do_now.lower() != "browse" or "remove" or "clear" or "checkout":
     # This is a while loop within a while loop that'll ensure the user can only move
     # forward with the shopping process if they enter one of the requested words
 
@@ -164,87 +165,145 @@ while x != "yes":
                 for section in available_items:
                     print(section)
 
-                choose_section = input("").title()
+                choose_section = input("\n").title()
    
-            if choose_section in available_items:
-                print(f"\nYou've just entered the {choose_section} section.\n"
-                       "\nIf anything interests you, type the item to see if there are different varieties.")
 
-                if choose_section == "Baked Goods":
-                    print("Here are the different baked goods available:\n")
-                    for baked_good in available_items["Baked Goods"]:
-                        print(baked_good)
+            print(f"\nYou've just entered the {choose_section} section.\n"
+                    "\nIf anything interests you, type the item to see if there are different varieties.")
 
-                if choose_section == "Produce":
-                    print("Here is the different produce available:\n")
-                    for produce in available_items["Produce"]:
-                        print(produce)
+            if choose_section.title() in available_items:
+                print("\nHere's what we have in that section:\n")
+                for food_item in available_items[choose_section.title()]:
+                    print(food_item)
 
-                if choose_section == "Drinks":
-                    print("Here are the different drinks available:\n")
-                    for drink in available_items["Drinks"]:
-                        print(drink)
+                choose_food_type = input(f"\nPlease choose an item: ")
 
-                if choose_section == "Meat Counter":
-                    print("Here are the different kinds of meat available:\n")
-                    for meat in available_items["Meat Counter"]:
-                        print(meat)
+                while choose_food_type.title() not in available_items[choose_section.title()]:
+                    print("\nSorry, you must enter an item that's in the section.")
+                    print(f"\nThese are the available items.\n")
+                    for food_item in available_items[choose_section.title()]:
+                        print(food_item)
+                    choose_food_type = input("\nPlease try again: ")
 
-                if choose_section == "Cheese Counter":
-                    print("Here are the different cheeses available:\n")
-                    for cheese in available_items["Cheese Counter"]:
-                        print(cheese)
+                # This is where we distinguish between food items that have variety and those that don't
+                # The statement below sets aside all food items that have no variety, and immediately jumps to the purchasing stage
+                # It does this by asking whether or not there's a 'float' in the item
+                # Which will be true if the item is at its most specific stage, and thus has a set price, or a float)
+                if isinstance(available_items[choose_section.title()][choose_food_type.title()], float) == True:
+                    print(f"\nThe price of your item is ${available_items[choose_section.title()][choose_food_type.title()]:.2f}")
+                    add_to_cart = input(f"\nWould you like to add it to your cart? Enter 'yes' or 'no': ")
+                    if add_to_cart.lower() == "yes":
+                        for item, price in available_items[choose_section.title()].items():
+                            if item == choose_food_type.title():
+                                quantity = int(input("\nHow many would you like? "))
+                                price = price * quantity
+                                user_cart.update({ item : price })
+                                total_price += price
+                
+                else:
+                    print("Here are the kinds we have:\n\t")
+                    for variety in available_items[choose_section.title()][choose_food_type.title()]:
+                        print(variety)
 
+                    choose_variety = input(f"\nChoose which variety of {choose_food_type} you want: ")
+
+                    while choose_variety.title() not in available_items[choose_section.title()][choose_food_type.title()]:
+                        choose_variety = input(f"\nThat variety isn't available. Please try again. ")
+                    
+                    print(f"\nThe price of this item is ${available_items[choose_section.title()][choose_food_type.title()][choose_variety.title()]:.2f}")
+                    add_to_cart = input(f"\nWould you like to add it to your cart? Enter 'yes' or 'no': ")
+                    if add_to_cart.lower() == "yes":
+                        for item, price in available_items[choose_section.title()][choose_food_type.title()].items():
+                            if item == choose_variety.title():
+                                quantity = int(input("\nHow many would you like? "))
+                                price = price * quantity
+                                user_cart.update({ item : price })
+                                total_price += price           
+
+
+            # Break for "Browse" Section
             break
 
-        if do_now.lower() == "cart":
-            print("\nHere's your shopping cart\n\n")
+        if do_now.lower() == "remove":        
             
             if len(user_cart) == 0:
-                print("Your cart is currently empty.")
-
+                print("\nYou have nothing to remove from your shopping cart, because it's empty.")
             else:
-                print("Here's your cart")
+                
+                for item, price in user_cart.items():
+                    if len(item) < 8:
+                        print(f"{item.title()}\t\t\t\t${price:.2f}")
+                    elif len(item) > 12:
+                        print(f"{item.title()}\t\t${price:.2f}")
+                    else:
+                        print(f"{item.title()}\t\t\t${price:.2f}")                
+                
+                remove_item = input(f"\n\nWhich item would you like to remove from your shopping cart? \n\n").title()
 
-            break
+                while remove_item not in user_cart:
+                    print("\nThat item doesn't exist in your cart.\n")
 
-        if do_now.lower() == "remove":
-            print("\nHere's your shopping cart\n\n")            
+                    for item, price in user_cart.items():
+                        if len(item) < 8:
+                            print(f"{item.title()}\t\t\t\t${price:.2f}")
+                        elif len(item) > 12:
+                            print(f"{item.title()}\t\t${price:.2f}")
+                        else:
+                            print(f"{item.title()}\t\t\t${price:.2f}")
+                    
+                    remove_item = input("Which item would you like to remove? ").title()
+                
+                if remove_item in user_cart:
+                    total_price -= user_cart[remove_item]                    
+                    del user_cart[remove_item]
+                    print(f"{remove_item} has been removed.")
+                    while z != "no":
+                        z = input(f"\nWould you like to remove anything else? Enter 'yes' or 'no': \n\n").lower()
+                        if z == "no":
+                            break
+                        remove_item = input(f"\nWhat else would you like to remove? \n\n").title()
+                        if remove_item in user_cart:
+                            total_price -= user_cart[remove_item]
+                            del user_cart[remove_item]
+                            print(f"{remove_item} has been removed.")
             
-            if len(user_cart) == 0:
-                print("Your cart is currently empty.")
-
-            else:
-                print("Here's your cart")
-            
+            # Break for "Remove" Section            
             break
 
         if do_now.lower() == "clear":
-            print("\nHere's your shopping cart\n\n")
-            
-            if len(user_cart) == 0:
-                print("Your cart is currently empty.")
 
-            else:
-                print("Here's your cart")
-                
+            user_cart = {}
+            total_price = 0
+
+            # Break for "Clear" Section                            
             break
 
         if do_now.lower() == "checkout":
-            print("\nHere's your shopping cart\n\n")
 
-            if len(user_cart) == 0:
-                print("Your cart is currently empty.")
-
-            else:
-                print("Here's your cart")
-           
+            # Break for "Checkout" Section                       
             break
     
         else:
             do_now = input("\nSorry, your response didn't match.\n\n"
-                        "You must enter either 'browse', 'cart', 'remove', 'clear', or 'checkout': ")
+                        "You must enter either 'browse', 'remove', 'clear', or 'checkout': ")
     
+    if len(user_cart) == 0:
+        print("\nYour cart is currently empty")
+    else:
+        print("\nHere's a current overview of your shopping cart.\n\n"
+            "Food Item\t\t\tPrice\n")
+        for item, price in user_cart.items():
+            if len(item) < 8:
+                print(f"{item.title()}\t\t\t\t${price:.2f}")
+            elif len(item) > 16:
+                print(f"{item.title()}\t\t${price:.2f}")
+            else:
+                print(f"{item.title()}\t\t\t${price:.2f}")
+        
+        print(f"\n\t\t\t\tTotal Price:\t${total_price:.2f}")
 
 
-    x = input("\nThe total price of your items is blank. Are you sure you want to pay and check out? ").lower()
+    x = input(f"\nThe total price of your items is ${total_price:.2f}. If you'd like to checkout, enter 'yes'.\n\n"
+                "To explore other options, enter any other key: ").lower()
+
+print(f"\nThank you {username} for shopping with us!\n")
